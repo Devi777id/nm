@@ -1,0 +1,219 @@
+{
+  "answerEval": [
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd439",
+      "subject": "Biology",
+      "question_text": "What is the main function of chloroplasts?",
+      "topic": "Cell Structure",
+      "subtopic": "Chloroplasts",
+      "answer_options": {
+        "A": "Cellular respiration",
+        "B": "Photosynthesis"      ,
+        "C": "Protein synthesis"   ,
+        "D": "Lipid synthesis"
+      },
+      "correct_option": "B",
+      "explanation": "Chloroplasts are the sites of photosynthesis in plant cells, where light energy is converted into chemical energy in the form of glucose.",
+      "intensity": 0.4,
+      "expected_response_time": 15,
+      "normalized_response_time": 0.2,
+      "is_correct": true
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd421",
+      "subject": "Biology",
+      "question_text": "Which organelle is found in plant cells but NOT in animal cells?",
+      "topic": "Cell Structure",
+      "subtopic": "Eukaryotic Cells",
+      "answer_options": {
+        "A": "Mitochondrion"  ,
+        "B": "Ribosome"       ,
+        "C": "Chloroplast"    ,
+        "D": "Golgi apparatus"
+      },
+      "correct_option": "C",
+      "explanation": "Chloroplasts are the sites of photosynthesis in plant cells and are not found in animal cells.",
+      "intensity": 0.4,
+      "expected_response_time": 15,
+      "normalized_response_time": 0.2,
+      "is_correct": false
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd41f",
+      "subject": "Biology",
+      "question_text": "Which organelle is responsible for the synthesis of ATP, the cell's main energy-carrying molecule?",
+      "topic": "Cell Structure",
+      "subtopic": "Eukaryotic Cells",
+      "answer_options": {
+        "A": "Nucleus"      ,
+        "B": "Ribosome"     ,
+        "C": "Mitochondrion",
+        "D": "Chloroplast"
+      },
+      "correct_option": "C",
+      "explanation": "Mitochondria are often called the 'powerhouses' of the cell because they produce ATP through cellular respiration.",
+      "intensity": 0.3,
+      "expected_response_time": 15,
+      "normalized_response_time": 0.2,
+      "is_correct": false
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd444",
+      "subject": "Biology",
+      "question_text": "Which of the following is NOT evidence supporting the endosymbiotic theory?",
+      "topic": "Cell Structure",
+      "subtopic": "Endosymbiosis",
+      "answer_options": {
+        "A": "Mitochondria and chloroplasts have their own DNA.",
+        "B": "Mitochondria and chloroplasts have their own ribosomes.",
+        "C": "Mitochondria and chloroplasts are similar in size to bacteria.",
+        "D": "Mitochondria and chloroplasts have a cell wall similar to bacteria."
+      },
+      "correct_option": "D",
+      "explanation": "While mitochondria and chloroplasts have their own DNA, ribosomes, and are similar in size to bacteria, they do not have a cell wall like bacteria. The presence of DNA and ribosomes, along with size similarities, strongly support the idea that they originated from engulfed prokaryotic cells.",
+      "intensity": 0.7,
+      "expected_response_time": 30,
+      "normalized_response_time": 0.5,
+      "is_correct": false
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd443",
+      "subject": "Biology",
+      "question_text": "What is the endosymbiotic theory?",
+      "topic": "Cell Structure",
+      "subtopic": "Endosymbiosis",
+      "answer_options": {
+        "A": "The theory that prokaryotic cells evolved from eukaryotic cells.",
+        "B": "The theory that eukaryotic cells evolved from a symbiotic relationship between different types of prokaryotic cells.",
+        "C": "The theory that viruses are the ancestors of all cells.",
+        "D": "The theory that all cells arose spontaneously from non-living matter."
+      },
+      "correct_option": "B",
+      "explanation": "The endosymbiotic theory proposes that mitochondria and chloroplasts in eukaryotic cells originated from free-living prokaryotic cells that were engulfed by ancestral eukaryotic cells, establishing a mutually beneficial relationship.",
+      "intensity": 0.8,
+      "expected_response_time": 35,
+      "normalized_response_time": 0.6,
+      "is_correct": true
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd43b",
+      "subject": "Biology",
+      "question_text": "What is the green pigment found in chloroplasts that captures light energy for photosynthesis?",
+      "topic": "Cell Structure",
+      "subtopic": "Chloroplasts",
+      "answer_options": {
+        "A": "Carotenoid" ,
+        "B": "Xanthophyll",
+        "C": "Chlorophyll",
+        "D": "Anthocyanin"
+      },
+      "correct_option": "C",
+      "explanation": "Chlorophyll is the primary pigment in chloroplasts, responsible for absorbing light energy, primarily in the blue and red wavelengths, and driving the process of photosynthesis.",
+      "intensity": 0.5,
+      "expected_response_time": 20,
+      "normalized_response_time": 0.3,
+      "is_correct": false
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd431",
+      "subject": "Biology",
+      "question_text": "What are the four common components found in all cells, both prokaryotic and eukaryotic?",
+      "topic": "Cell Structure",
+      "subtopic": "Components of Prokaryotic Cells",
+      "answer_options": {
+        "A": "Nucleus, cytoplasm, ribosomes, and DNA"        ,
+        "B": "Plasma membrane, cytoplasm, ribosomes, and DNA",
+        "C": "Cell wall, cytoplasm, mitochondria, and DNA"   ,
+        "D": "Chloroplasts, cytoplasm, ribosomes, and RNA"
+      },
+      "correct_option": "B",
+      "explanation": "All cells, regardless of their type, share these four fundamental components: a plasma membrane, cytoplasm, ribosomes, and DNA.",
+      "intensity": 0.5,
+      "expected_response_time": 25,
+      "normalized_response_time": 0.4,
+      "is_correct": true
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd43a",
+      "subject": "Biology",
+      "question_text": "What is the name for the stacks of fluid-filled membrane sacs within chloroplasts?",
+      "topic": "Cell Structure",
+      "subtopic": "Chloroplasts",
+      "answer_options": {
+        "A": "Cristae"   ,
+        "B": "Thylakoids",
+        "C": "Grana"     ,
+        "D": "Stroma"
+      },
+      "correct_option": "C",
+      "explanation": "Grana are stacks of thylakoids, which are individual flattened membrane sacs within chloroplasts. The thylakoids contain chlorophyll and are the sites of the light-dependent reactions of photosynthesis.",
+      "intensity": 0.7,
+      "expected_response_time": 30,
+      "normalized_response_time": 0.5,
+      "is_correct": false
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd436",
+      "subject": "Biology",
+      "question_text": "What is the gel-like substance that fills the region between the plasma membrane and the nucleus in eukaryotic cells?",
+      "topic": "Cell Structure",
+      "subtopic": "The Cytoplasm",
+      "answer_options": {
+        "A": "Nucleoplasm",
+        "B": "Cytosol"    ,
+        "C": "Stroma"     ,
+        "D": "Matrix"
+      },
+      "correct_option": "B",
+      "explanation": "Cytosol is the fluid portion of the cytoplasm, containing dissolved molecules, ions, and the cytoskeleton, providing a medium for cellular processes.",
+      "intensity": 0.4,
+      "expected_response_time": 20,
+      "normalized_response_time": 0.3,
+      "is_correct": true
+    },
+    {
+      "selected_option": "b",
+      "user_response_time": 0.6,
+      "_id": "66dac5bb62971efbd25fd438",
+      "subject": "Biology",
+      "question_text": "Which of these structures is found in animal cells but NOT in most plant cells?",
+      "topic": "Cell Structure",
+      "subtopic": "Lysosomes",
+      "answer_options": {
+        "A": "Chloroplast"    ,
+        "B": "Lysosome"       ,
+        "C": "Central vacuole",
+        "D": "Cell wall"
+      },
+      "correct_option": "B",
+      "explanation": "Lysosomes are membrane-bound organelles containing digestive enzymes, primarily found in animal cells. Plant cells typically use vacuoles for similar digestive functions.",
+      "intensity": 0.5,
+      "expected_response_time": 20,
+      "normalized_response_time": 0.3,
+      "is_correct": true
+    }
+  ],
+  "mark": "5/10",
+  "point": 50,
+  "user_level": 0.5599999999999999,
+  "avg_response_time": 0.5999999999999999,
+  "avg_intensity": 0.52
+}

@@ -1,124 +1,64 @@
-
 import streamlit as st
 import google.generativeai as genai
-import os
-import PyPDF2
 from dotenv import load_dotenv
-import warnings
 import json
+import os
 
+# Load environment variables
 load_dotenv()
 
+# Configure the Google Generative AI API with your API key
 genai.configure(api_key=os.environ["API_KEY"])
 
+# Define the root directory for the JSON file
+json_file_path = r"C:/Users/hp/Desktop/projects/nm/evaljson.json"
 
-# Function to extract text from PDF
-def extract_text_from_pdf(pdf_file):
-    pdf_reader = PyPDF2.PdfReader(pdf_file)
-    extracted_text = ""
-    for page in pdf_reader.pages:
-        text = page.extract_text()
-        if text:
-            extracted_text += text
-    return extracted_text
+# Load the JSON file from the root directory
+with open(json_file_path, "r") as file:
+    json_data = json.load(file)
 
+# Extract the relevant data from the JSON
+score = json_data.get("mark", None)
+answer_eval = json_data.get("answerEval", [])
 
-def generate_questions(pdf_text, output_file='questions.json'):
-    # Define the prompt with the extracted text
+# Function to generate recommendation based on the model
+def generate_recommendation_from_model(score, answer_eval):
+    # Create the prompt using the input JSON data
     prompt = f"""
-    
-    Based on the provided text, generate 15 multiple-choice questions. 
-    - The response should be a valid JSON list.
-    Each question should be in the following format:
-    1. **Question text**
-       - A) Answer option A
-       - B) Answer option B
-       - C) Answer option C
-       - D) Answer option D
-    
-    Provide the questions as a JSON list where each question is an object with the following structure:
+    <Instructions>
+    - The following JSON data represents the evaluation of a user's answers to 10 questions in the subject of Biology.
+    - Your task is to analyze the data and provide a performance summary, areas of improvement, and suggested intensity levels.
+    - Pay CLOSE ATTENTION to the question_text, answer_options, correct_option, explanation, intensity, and expected_response_time for each question, and compare these with selected_option, user_response_time, and is_correct values in the answerEval list.
+    </Instructions>
+
+    <AnswerEvaluationJSON>
+    {json.dumps(answer_eval, indent=2)}
+    </AnswerEvaluationJSON>
+
+    <ExpectedOutput>
     {{
-        "question_text": "Question text",
-        "answer_options": {{
-            "A": "Answer option A",
-            "B": "Answer option B",
-            "C": "Answer option C",
-            "D": "Answer option D"
-        }},
-        "correct_option": "A",
-        "explanation": "Explanation for the correct answer"
+    "performance_summary": "Your detailed performance summary",
+    "improvement_topics": ["Topic1", "Topic2", "Topic3"],
+    "suggested_intensity_level": [0.5, 0.6, 0.7]
     }}
+    </ExpectedOutput>
     """
 
+    # Generate the recommendation using the AI model
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-    response = model.generate_content([prompt, pdf_text])
+    response = model.generate_content(prompt)
+
+    # Construct the recommendation from the AI response
+    recommendation = {
+        "score": score,
+        "generated_recommendation": response.text
+    }
     
-    # Retrieve and print the raw response for debugging
-    raw_response = response.text
-    print("Raw Response:", raw_response)  # For debugging purposes
+    return recommendation
 
-    # Attempt to clean and parse the JSON response
-    try:
-        # Clean up the response if it contains extra information
-        clean_response = raw_response.strip()
-        if clean_response.startswith("<Instructions>"):
-            clean_response = clean_response.split("</Instructions>")[1].strip()
-        if clean_response.startswith("<Question>"):
-            clean_response = clean_response.split("</Question>")[0].strip()
-        
-        question_list = json.loads(clean_response)
-    except json.JSONDecodeError as e:
-        return f"Error decoding JSON from the response: {e}"
-    except Exception as e:
-        return f"An unexpected error occurred: {e}"
-
-    # # Save questions to a JSON file
-    # try:
-    #     with open(output_file, 'w') as f:
-    #         json.dump(question_list, f, indent=4)
-    #     return f"Questions successfully saved to {output_file}."
-    # except IOError as e:
-    #     return f"Error saving questions to file: {e}"
-
-# Example usage
-pdf_text = "Your PDF text goes here."
-result = generate_questions(pdf_text)
-print(result)
-
-# Define pdf_text globally
-pdf_text = None
-
-# Streamlit UI
-st.title('PDF Question Generator')
-uploaded_file = st.file_uploader("Upload your PDF file", type="pdf") 
-st.info('Please upload a PDF file to begin.')   
-
-
-
-
-if uploaded_file:
-            pdf_text = extract_text_from_pdf(uploaded_file)
-            st.success('Text extracted successfully!')
-            # Button to generate questions
-            if st.button('Generate Questions'):
-                with st.spinner('Generating questions...'):
-                    questions = generate_questions(pdf_text)
-
-                    # Display the generated questions in a neat format
-                    st.markdown("### Generated Questions")
-                    st.write(questions)  # You can parse and display JSON as needed
-
-                    try:
-                            question_list = json.loads(questions)  # Use json.loads to parse JSON
-                            for idx, question in enumerate(question_list):
-                                st.markdown(f"**Question {idx+1}: {question['question_text']}**")
-                                st.markdown(f"**Topic:** {question['topic']} | **Subtopic:** {question['subtopic']}")
-                                st.markdown("Options:")
-                                for option, answer in question['answer_options'].items():
-                                    st.markdown(f"- **{option}:** {answer}")
-                                st.markdown(f"**Correct Answer:** {question['correct_option']}")
-                                st.markdown(f"**Explanation:** {question['explanation']}")
-                                st.markdown("---")
-                    except json.JSONDecodeError:
-                            st.error("Invalid JSON format. Please check the output from the Gemini model.")
-                
+# Create a button to trigger the suggestion generation
+if st.button('Generate Suggestion'):
+    result = generate_recommendation_from_model(score, answer_eval)
+    
+    # Display the result
+    st.write(result)

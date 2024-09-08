@@ -65,7 +65,7 @@ def generate_questions(pdf_text):
     prompt = f"""
     <Instructions>
     - Use the provided pdf file only to create questions.
-    - The response should be a JSON list.
+    - The response should be a valid JSON format.
     </Instructions>
     <Question>
     Generate 15 questions for the subject  based on the provided text. Each question should follow this schema:
@@ -96,35 +96,68 @@ def generate_questions(pdf_text):
 
     return questions
 
-# Function to generate a recommendation based on score
-def generate_recommendation(score, pdf_text):
-    prompt = f"""
-    The user has a score of {score}/5 on their evaluation. 
-    Based on the score provided, generate a personalized recommendation using only the contents of the uploaded PDF file. 
-    The recommendation should include a detailed roadmap for the user to follow. 
-    Display the recommendation only after the PDF file is uploaded and the score has been entered
-    If the score is:
-    - 0-3: Very low performance, provide a detailed plan for improvement.
-    - 4-6: Below average performance, suggest some improvements.
-    - 7-9: Good performance, suggest ways to enhance further.
-    - 10: Excellent performance, provide encouragement and advanced tips.
-    Text: {pdf_text}
+# Streamlit UI
+st.title('PDF Question Generator')
+uploaded_file = st.file_uploader("Upload your PDF file", type="pdf")
 
-    Response:
+# Define the root directory for the JSON file
+json_file_path = r"C:/Users/hp/Desktop/projects/nm/evaljson.json"
+
+# Load the JSON file from the root directory
+with open(json_file_path, "r") as file:
+    json_data = json.load(file)
+
+# Extract the relevant data from the JSON
+score = json_data.get("mark", None)
+answer_eval = json_data.get("answerEval", [])
+
+
+def generate_recommendation_from_model(score, recommendation_data):
+    # Create the prompt using the input JSON data
+    prompt = f"""
+    <Instructions>
+    - The following JSON data represents the evaluation of a user's answers to 10 questions in the subject of Biology.
+    - Your task is to analyze the data and provide a performance summary, areas of improvement, and suggested intensity levels.
+    - The user has scored {score}.
+    - Pay CLOSE ATTENTION to the question_text, answer_options, correct_option, explanation, intensity, and expected_response_time for each question, and compare these with selected_option, user_response_time, and is_correct values in the answerEval list.
+    </Instructions>
+
+    <AnswerEvaluationJSON>
+    {json.dumps(answer_eval, indent=2)}
+    </AnswerEvaluationJSON>
+
+    <ExpectedOutput>
+    {{
+    "performance_summary": "Your detailed performance summary",
+    "improvement_topics": ["Topic1", "Topic2", "Topic3"],
+    "suggested_intensity_level": [0.5, 0.6, 0.7]
+    }}
+    </ExpectedOutput>
     """
+
+    # Generate the recommendation using the AI model
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
     response = model.generate_content(prompt)
 
-    recommendation = response.text
+    # Construct the recommendation from the AI response
+    recommendation = {
+        "score": score,
+        "generated_recommendation": response.text
+    }
+    
     return recommendation
+# Create a button to trigger the suggestion generation
+if st.button('Generate Suggestion'):
+                    result = generate_recommendation_from_model(score, answer_eval)
+                    
+                    # Display the result
+                    st.write(result)
 
 
 # Define pdf_text globally
 pdf_text = None
 
-# Streamlit UI
-st.title('PDF Question Generator')
-uploaded_file = st.file_uploader("Upload your PDF file", type="pdf")
+
 with st.sidebar:
     if uploaded_file and pdf_text:
         st.info('Please upload a PDF file to begin.')
@@ -132,7 +165,7 @@ with st.sidebar:
     if uploaded_file:
         pdf_text = extract_text_from_pdf(uploaded_file)
         st.success('Text extracted successfully!')
-        score = st.number_input("Enter your score (0-10):", max_value=10, step=1)
+        
         # Button to generate questions
         if st.button('Generate Questions'):
             with st.spinner('Generating questions...'):
@@ -141,6 +174,7 @@ with st.sidebar:
                 # Display the generated questions in a neat format
                 st.markdown("### Generated Questions")
                 st.write(questions)  # You can parse and display JSON as needed
+                # score = st.number_input("Enter your score (0-10):", max_value=10, step=1)
 
                 try:
                         question_list = json.loads(questions)  # Use json.loads to parse JSON
@@ -156,13 +190,9 @@ with st.sidebar:
                 except json.JSONDecodeError:
                         st.error("Invalid JSON format. Please check the output from the Gemini model.")
                
-
-                if score is not None:
-                    recommendation = generate_recommendation(score, pdf_text)
-                    st.markdown("### Recommendation")
-                    st.write(recommendation)
-
                 
+                
+
 
     
 
